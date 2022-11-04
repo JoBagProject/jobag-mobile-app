@@ -38,6 +38,8 @@ class JobOffer {
         required this.title,
         required this.description,
         required this.wage,
+        required this.snippet,
+        required this.bannerPicture,
         required this.hasHired,
         required this.companyId,
     });
@@ -45,6 +47,8 @@ class JobOffer {
     int id;
     String title;
     String description;
+    String snippet;
+    String bannerPicture;
     int wage;
     bool hasHired;
     int companyId;
@@ -57,6 +61,8 @@ class JobOffer {
         id: json["id"],
         title: json["title"],
         description: json["description"],
+        snippet: json["snippet"],
+        bannerPicture: json["bannerPicture"],
         wage: json["wage"],
         hasHired: json["hasHired"],
         companyId: json["companyId"],
@@ -66,6 +72,8 @@ class JobOffer {
         "id": id,
         "title": title,
         "description": description,
+        "snippet": snippet,
+        "bannerPicture": bannerPicture,
         "wage": wage,
         "hasHired": hasHired,
         "companyId": companyId,

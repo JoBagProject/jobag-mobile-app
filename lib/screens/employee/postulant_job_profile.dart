@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/postulant_providers/security/auth_postulant.dart';
+import '../../providers/postulant/postulant_provider.dart';
 
 class JobProfilePage extends StatefulWidget {
   @override
@@ -15,13 +15,12 @@ class MapScreenState extends State<JobProfilePage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthPostulantService>(context);
+    final user = Provider.of<PostulantServiceProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -83,323 +82,385 @@ class MapScreenState extends State<JobProfilePage>
                 color: Color(0xffFFFFFF),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Información',
-                                    style: TextStyle(
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  _status ? _getEditIcon() : Container(),
-                                ],
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Nombre',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: "Nombres y Apellidos",
-                                  ),
-                                  enabled: !_status,
-                                  autofocus: !_status,
-
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Email',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Correo Electrónico"),
-                                  enabled: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Número de teléfono',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "987654321"),
-                                  enabled: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
-                          Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Trabajos',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Insertar lugares de trabajo"),
-                                  enabled: !_status,
-                                ),
-                              ),
-                            ],
-                          )),
+                  child: Form(
+                    key: user.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Centro de Estudios',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Tu centro de estudios"),
-                                  enabled: !_status,
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Información',
+                                      style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          )),
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    _status ? _getEditIcon() : Container(),
+                                  ],
+                                )
+                              ],
+                            )),
                         Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Idiomas',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Idiomas que dominas"),
-                                  enabled: !_status,
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Nombre y Apellidos',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          )),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.firstName,
+                                    decoration: const InputDecoration(
+                                      hintText: "Nombre",
+                                    ),
+                                    onChanged: ( value ) {
+                                      user.postulant.firstName = value;
+                                    },
+                                    enabled: !_status,
+                                    autofocus: !_status,
+                  
+                                  ),
+                                ),
+                              ],
+                            )),
+                            Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.lastName,
+                                    decoration: const InputDecoration(
+                                      hintText: "Apellido",
+                                    ),
+                                    onChanged: ( value ) {
+                                      user.postulant.lastName = value;
+                                    },
+                                    enabled: !_status,
+                                    autofocus: !_status,
+                  
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Email',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.email,
+                                    decoration: const InputDecoration(
+                                        hintText: "Correo Electrónico"
+                                      ),
+                                    onChanged: ( value ) {
+                                      user.postulant.email = value;
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Número de teléfono',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.phoneNumber.toString(),
+                                    decoration: const InputDecoration(
+                                        hintText: "987654321"),
+                                    onChanged: ( value ) {
+                                      user.postulant.phoneNumber = int.parse(value);
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
+                            Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Trabajos',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.workingPlaces,
+                                    decoration: const InputDecoration(
+                                        hintText: "Insertar lugares de trabajo"),
+                                    onChanged: ( value ) {
+                                      user.postulant.workingPlaces = value;
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
                           Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Cualidades',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Tus cualidades"),
-                                  enabled: !_status,
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Centro de Estudios',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          )),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.studyCenter,
+                                    decoration: const InputDecoration(
+                                        hintText: "Tu centro de estudios"),
+                                    onChanged: ( value ) {
+                                      user.postulant.workingPlaces = value;
+                                      
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
                           Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                 Text(
-                                    'Acerca de mí',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 2.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                             Flexible(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: "Descripción"),
-                                  enabled: !_status,
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Idiomas',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          )),
-                      !_status ? _getActionButtons() : Container(),
-                    ],
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.languages,
+                                    decoration: const InputDecoration(
+                                        hintText: "Idiomas que dominas"),
+                                    onChanged: ( value ) {
+                                      user.postulant.languages = value;
+                                      
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
+                            Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Cualidades',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.skills,
+                                    decoration: const InputDecoration(
+                                        hintText: "Tus cualidades"),
+                                    onChanged: ( value ) {
+                                      
+                                      user.postulant.skills = value;
+                                    },
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
+                            Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 25.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                   Text(
+                                      'Acerca de mí',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: 25.0, right: 25.0, top: 2.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                               Flexible(
+                                  child: TextFormField(
+                                    initialValue: user.postulant.about,
+                                    decoration: const InputDecoration(
+                                        hintText: "Descripción"),
+                                    onChanged: ( value ) {
+                                      user.postulant.about = value;
+                                    },
+                                    maxLines: 5,
+                                    enabled: !_status,
+                                  ),
+                                ),
+                              ],
+                            )),
+                        !_status ? _getActionButtons(user) : Container(),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -417,7 +478,7 @@ class MapScreenState extends State<JobProfilePage>
     super.dispose();
   }
 
-  Widget _getActionButtons() {
+  Widget _getActionButtons(PostulantServiceProvider currentUser) {
     return Padding(
       padding: EdgeInsets.only(left: 25.0, right: 25.0, top: 45.0),
       child: Row(
@@ -432,7 +493,8 @@ class MapScreenState extends State<JobProfilePage>
                 child: Text("Guardar"),
                 textColor: Colors.white,
                 color: Colors.indigo,
-                onPressed: () {
+                onPressed: () async {
+                  await currentUser.updatePostulant(currentUser.postulant);
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(FocusNode());

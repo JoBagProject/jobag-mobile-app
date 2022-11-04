@@ -3,18 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mi_proyecto/models/postulant/postulant_response_model.dart';
+import 'package:mi_proyecto/models/saved_job_offer/saved_job_offer.dart';
+import 'package:mi_proyecto/providers/job_offer/job_offers_provider.dart';
 
-import '../../../global/environment.dart';
-import '../../../models/postulant/postulant_model.dart';
+import '../../global/environment.dart';
+import '../../models/job_offer/job_offer_model.dart';
+import '../../models/postulant/postulant_model.dart';
 
-class AuthPostulantService with ChangeNotifier {
+class PostulantServiceProvider with ChangeNotifier {
+  List<JobOffer> valor = [];
 
   bool _autenticando = false;
   late Postulant postulant;
+
+  PostulantServiceProvider(
+  );
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
   final _storage = new FlutterSecureStorage();
 
   bool get autenticando => this._autenticando;
+
   set autenticando( bool valor ) {
     this._autenticando = valor;
     notifyListeners();
@@ -71,15 +81,24 @@ class AuthPostulantService with ChangeNotifier {
     await _storage.delete(key: 'token');
   }
 
-  Future<String> updatePostulant(Postulant postulant) async
-  {
+  Future<Postulant> updatePostulant(Postulant postulant) async {
     notifyListeners();
+    
+    if (postulant.id != null)
+    {
+      this.postulant = postulant;
+      final url = Uri.http( '10.0.2.2:5193', '/api/Postulant/Update');
+      final resp = await http.put(
+        url,
+        body: this.postulant.toJson(),
+        headers: {
+        'Content-Type': 'application/json'
+          });
+      final decodedData = resp.body;
+      print(decodedData);
+    }
 
-    final url = Uri.http( Environment.apiUrl, '/Postulant/Update');
-    final resp = await http.put(url, body: postulant.toJson());
-    final decodedData = resp.body;
-    print (decodedData);
-
-    return '';
+    notifyListeners();
+    return this.postulant;
   }
 }

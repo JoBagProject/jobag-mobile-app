@@ -34,12 +34,12 @@ class JobOfferCard extends StatelessWidget {
           child: Column(
             children: [
               Image(
-                image: NetworkImage('https://www.upc.edu.pe/nosotros/campus/img/campus-monterrico.jpg'),
+                image: NetworkImage(jobOffersNow[index].bannerPicture),
                 ),
   
               ListTile(
                 title: Text(jobOffersNow[index].title),
-                subtitle: Text(jobOffersNow[index].description),
+                subtitle: Text(jobOffersNow[index].snippet),
               ),
   
               Padding(

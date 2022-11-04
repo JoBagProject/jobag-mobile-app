@@ -13,6 +13,11 @@ class Postulant {
         required this.salary,
         required this.email,
         required this.phoneNumber,
+        required this.workingPlaces,
+        required this.languages,
+        required this.studyCenter,
+        required this.skills,
+        required this.about,
         required this.profilePicture,
         required this.bannerPicture,
         required this.passwordHash,
@@ -26,6 +31,11 @@ class Postulant {
     int salary;
     String email;
     int phoneNumber;
+    String workingPlaces;
+    String languages;
+    String studyCenter;
+    String skills;
+    String about;
     String profilePicture;
     String bannerPicture;
     String passwordHash;
@@ -43,6 +53,11 @@ class Postulant {
         salary: json["salary"],
         email: json["email"],
         phoneNumber: json["phoneNumber"],
+        workingPlaces: json["workingPlaces"],
+        languages: json["languages"],
+        skills: json["skills"],
+        studyCenter: json["studyCenter"],
+        about: json["about"],
         profilePicture: json["profilePicture"],
         bannerPicture: json["bannerPicture"],
         passwordHash: json["passwordHash"],
@@ -57,6 +72,11 @@ class Postulant {
         "salary": salary,
         "email": email,
         "phoneNumber": phoneNumber,
+        "workingPlaces": workingPlaces,
+        "languages": languages,
+        "skills": skills,
+        "studyCenter": studyCenter,
+        "about": about,
         "profilePicture": profilePicture,
         "bannerPicture": profilePicture,
         "passwordHash": passwordHash,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mi_proyecto/providers/postulant_providers/job_offer/job_offers_provider.dart';
 import 'package:mi_proyecto/screens/shared/sidebar_menu_screen.dart';
 import 'package:mi_proyecto/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/job_offer/job_offers_provider.dart';
 
 class HomeScreen extends StatefulWidget {
 

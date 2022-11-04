@@ -7,19 +7,26 @@ import '../../../global/environment.dart';
 
 class JobOfferProvider with ChangeNotifier {
   List<JobOffer> currentJobOffers = [];
+  List<JobOffer> savedJobOffers = [];
 
   JobOfferProvider()
   {
     this.getJobOffers();
+  }
 
+  getJobOfferById(int id) async {
+    var url = Uri.http('10.0.2.2:5193','/api/JobOffer/Get?jobOfferId=${id}');
+    final response = await http.get(url);
+    final jobOffersResponse = JobOfferResponse.fromJson(response.body);
+    //this.savedJobOffers = jobOffersResponse.data;
+    notifyListeners();
+    return jobOffersResponse;
   }
 
   getJobOffers() async {
-    var url = Uri.http('10.0.2.2:5193','/api/JobOffer/GetAll');
+    var url = Uri.http('10.0.2.2:5193', '/api/JobOffer/GetAll');
     final response = await http.get(url);
-    print(response);
     final jobOffersResponse = JobOfferResponse.fromJson(response.body);
-    print(jobOffersResponse.data[0].description);
     this.currentJobOffers = jobOffersResponse.data;
     notifyListeners();
   }

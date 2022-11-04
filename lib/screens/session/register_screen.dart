@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mi_proyecto/providers/postulant_providers/register_postulant_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/postulant_providers/security/auth_postulant.dart';
+import '../../providers/postulant/postulant_provider.dart';
 import '../../ui/input_decoration.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -21,10 +20,8 @@ class RegisterScreen extends StatelessWidget {
       (
         child: Column(
           children: [
-            ChangeNotifierProvider(
-              create: ( _ ) => RegisterFormProvider(),
-              child: _RegisterForm(),
-            )
+            
+            
           ]
         )
       )
@@ -36,11 +33,9 @@ class RegisterScreen extends StatelessWidget {
    
    @override
    Widget build(BuildContext context) {
-     final registerForm = Provider.of<RegisterFormProvider>(context);
-     final user = Provider.of<AuthPostulantService>(context);
+     final user = Provider.of<PostulantServiceProvider>(context);
 
      return Form(
-      key: registerForm.formKey,
        autovalidateMode: AutovalidateMode.onUserInteraction,
        child: Container(
          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
@@ -53,8 +48,6 @@ class RegisterScreen extends StatelessWidget {
                    labelText: 'Nombre',
                  ),
                  onChanged: ( value ) {
-                  registerForm.firstName;
-                  registerForm.id = user.postulant.id;
                   }
              ),
              TextFormField(
@@ -63,7 +56,6 @@ class RegisterScreen extends StatelessWidget {
                    hintText: 'Doe',
                    labelText: 'Apellido',
                  ),
-                 onChanged: ( value ) => registerForm.lastName,
              ),
              TextFormField(
                  autocorrect: false,
@@ -71,7 +63,6 @@ class RegisterScreen extends StatelessWidget {
                    hintText: '987654321',
                    labelText: 'Número telefónico',
                  ),
-                 onChanged: ( value ) => registerForm.phoneNumber,
              ),
              TextFormField(
                  autocorrect: false,
@@ -79,7 +70,6 @@ class RegisterScreen extends StatelessWidget {
                    hintText: 'Esta foto será tu perfil',
                    labelText: 'Foto de perfil',
                  ),
-                 onChanged: ( value ) => registerForm.profilePicture,
              ),
              TextFormField(
                  autocorrect: false,
@@ -87,7 +77,6 @@ class RegisterScreen extends StatelessWidget {
                    hintText: 'Esta foto será tu portada',
                    labelText: 'Foto de portada',
                  ),
-                 onChanged: ( value ) => registerForm.bannerPicture,
              ),
              DropdownButtonFormField<String>(
                decoration: InputDecorations.authInputDecoration(hintText: 'Empleador', labelText: 'Rol'),
@@ -96,8 +85,6 @@ class RegisterScreen extends StatelessWidget {
                  DropdownMenuItem(value: 'postulante', child: Text('Postulante')),
                ],
                onChanged: ( value ) {
-                 if (value == 'empleador') registerForm.roleId = 1;
-                 else registerForm.roleId = 2;
                },
              ),
              SizedBox(height: 50),

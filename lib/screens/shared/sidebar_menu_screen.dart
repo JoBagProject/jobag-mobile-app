@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mi_proyecto/providers/postulant_providers/security/auth_postulant.dart';
 import 'package:mi_proyecto/screens/screens.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/postulant/postulant_provider.dart';
 
 
 class SidebarMenu extends StatelessWidget {
@@ -21,12 +22,12 @@ class SidebarMenu extends StatelessWidget {
           ),
           Divider(),
           
-          _SideBarOption(
-            icon: Icons.person,
-            title: 'Mi Perfil',
-            navigateFunction: () => Navigator.pushNamed(context, 'employee_profile')
-          ),
-          Divider(),
+          //_SideBarOption(
+          //  icon: Icons.person,
+          //  title: 'Mi Perfil',
+          //  navigateFunction: () => Navigator.pushNamed(context, 'employee_profile')
+          //),
+          //Divider(),
 
           _SideBarOption(
             icon: Icons.man,
@@ -60,7 +61,7 @@ class SidebarMenu extends StatelessWidget {
             icon: Icons.logout,
             color: Colors.red,
             title: 'Salir',
-            navigateFunction: () { Navigator.pushReplacementNamed(context, 'login_screen'); AuthPostulantService.deleteToken(); }
+            navigateFunction: () { Navigator.pushReplacementNamed(context, 'login_screen'); PostulantServiceProvider.deleteToken(); }
           ),
         ],
       ),
@@ -103,7 +104,7 @@ class _Account extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthPostulantService>(context);
+    final user = Provider.of<PostulantServiceProvider>(context);
     return UserAccountsDrawerHeader(
       accountName: Text(user.postulant.firstName),
       accountEmail: Text(user.postulant.lastName),

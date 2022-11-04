@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mi_proyecto/helpers/mostrar_alerta.dart';
-import 'package:mi_proyecto/providers/postulant_providers/security/auth_postulant.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/postulant_providers/security/auth_postulant.dart';
+import '../../providers/postulant/postulant_provider.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -58,7 +57,7 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     
-    final authService = Provider.of<AuthPostulantService>( context );
+    final authService = Provider.of<PostulantServiceProvider>( context );
 
     return Container(
       margin: EdgeInsets.only(top: 40),

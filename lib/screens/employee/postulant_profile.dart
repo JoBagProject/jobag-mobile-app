@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mi_proyecto/providers/postulant_providers/security/auth_postulant.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/postulant/postulant_model.dart';
+import '../../providers/postulant/postulant_provider.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class MapScreenState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthPostulantService>(context);
+    final user = Provider.of<PostulantServiceProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -245,17 +245,6 @@ class MapScreenState extends State<ProfilePage> {
                                 ),
                                 flex: 2,
                               ),
-                              Expanded(
-                                child: Container(
-                                  child: Text(
-                                    'País',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                flex: 2,
-                              ),
                             ],
                           )),
                       Padding(
@@ -269,20 +258,11 @@ class MapScreenState extends State<ProfilePage> {
                                 child: Padding(
                                   padding: EdgeInsets.only(right: 10.0),
                                   child: TextFormField(
-                                    initialValue: user.postulant.salary.toString(),
+                                    initialValue: 'S/.' + user.postulant.salary.toString(),
                                     decoration: const InputDecoration(
                                         hintText: "Ingresar profesión"),
                                     enabled: !_status,
                                   ),
-                                ),
-                                flex: 2,
-                              ),
-                              Flexible(
-                                child: TextFormField(
-                                  initialValue: user.postulant.firstName,
-                                  decoration: const InputDecoration(
-                                      hintText: "Ingresar país"),
-                                  enabled: !_status,
                                 ),
                                 flex: 2,
                               ),
