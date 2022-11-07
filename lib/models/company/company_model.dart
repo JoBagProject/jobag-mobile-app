@@ -1,6 +1,7 @@
 // To parse this JSON data, do
 //
 //
+//
 //     final companyResponse = companyResponseFromMap(jsonString);
 
 import 'dart:convert';
